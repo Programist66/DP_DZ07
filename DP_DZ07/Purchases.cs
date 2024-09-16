@@ -11,15 +11,21 @@ namespace DZ_DP07
     {
         private Product head;
 
-        public int Count { get; private set; } = 0;
+        public Purchases()
+        {
+        }
 
-        public void Add(string name)
+        public Purchases(Product head)
+        {
+            this.head = head;
+        }
+
+        public void Insert(string name)
         {
             Product newPurchase = new Product(name);
             if (head == null)
             {
                 head = newPurchase;
-                Count++;
             }
             else
             {
@@ -29,19 +35,21 @@ namespace DZ_DP07
                     current = current.Next;
                 }
                 current.Next = newPurchase;
-                Count++;
             }
-        }    
+        }
+        
+        public void Add(string name)        
+        {
+            Product newPurchase = new Product(name, head);
+            head = newPurchase;
+        }
 
         public IEnumerator<Product> GetEnumerator()
         {
-            Product current = head;
-            while (current.Next != null)
+            for (Product? product = head; product != null; product = product.Next)
             {
-                yield return current;
-                current = current.Next;
+                yield return product;
             }
-            yield return current;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
